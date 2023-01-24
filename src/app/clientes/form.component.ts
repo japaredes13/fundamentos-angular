@@ -11,6 +11,7 @@ import swal from 'sweetalert2';
 export class FormComponent implements OnInit {
   public cliente: Cliente = new Cliente();
   public titulo:string = "Crear Cliente";
+  clientes: Cliente[];
 
   constructor(private clienteService:ClienteService,
     private router:Router,
@@ -39,5 +40,12 @@ export class FormComponent implements OnInit {
     );
   }
 
+  update() : void{
+    this.clienteService.update(this.cliente)
+      .subscribe( cliente => {
+        this.router.navigate(['/clientes']);
+        swal.fire("Cliente Actualizado",`Cliente ${cliente.name} actualizado con éxito`, 'success');
+      })
+  }
 
 }
