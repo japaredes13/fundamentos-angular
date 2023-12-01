@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Cliente } from './cliente';
+import { Region } from './region';
 import { ClienteService } from './cliente.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
@@ -12,6 +13,7 @@ export class FormComponent implements OnInit {
   public cliente: Cliente = new Cliente();
   public titulo:string = "Crear Cliente";
   clientes: Cliente[];
+  regiones: Region[];
 
 
   public errors : string[];
@@ -22,12 +24,15 @@ export class FormComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarCliente();
+    this.clienteService.getRegiones().subscribe(regiones => {
+      this.regiones = regiones;
+    })
   }
 
   cargarCliente(): void {
-    this.activatedRouter.params.subscribe(params => {
-      let id = params['id']
-
+    this.activatedRouter.paramMap.subscribe(params => {
+      let id = +params.get('id');
+      console.log(id);
       if(id){
         this.clienteService.getCliente(id).subscribe( (cliente) => this.cliente = cliente)
       }
@@ -59,6 +64,14 @@ export class FormComponent implements OnInit {
         console.log("Código del error desde el backend: "+err.status);
         console.log(err.error.errors);
       }
+  }
+
+  compararRegion(regionSelect : Region, clienteRegion : Region): boolean{
+    console.log(clienteRegion)
+    if (regionSelect == undefined && clienteRegion == undefined) {
+      return true;
+    }
+    return regionSelect == null || clienteRegion == null ? false : regionSelect.id === clienteRegion.id;
   }
 
 }
