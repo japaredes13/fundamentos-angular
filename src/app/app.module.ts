@@ -9,7 +9,7 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { ClienteService } from './clientes/cliente.service';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormComponent } from './clientes/form.component';
 import { FormsModule } from '@angular/forms';
 
@@ -23,6 +23,7 @@ import { DetalleComponent } from './clientes/detalle/detalle.component';
 import { LoginComponent } from './usuarios/login.component';
 import { AuthGuard } from './usuarios/guards/auth.guard';
 import { RoleGuard } from './usuarios/guards/role.guard';
+import { TokeInterceptor } from './usuarios/interceptors/token.interceptor';
 registerLocaleData(localeES, 'es');
 
 const routes: Routes = [
@@ -58,6 +59,7 @@ const routes: Routes = [
   ],
   providers: [
     ClienteService,
+    { provide: HTTP_INTERCEPTORS, useClass: TokeInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })
