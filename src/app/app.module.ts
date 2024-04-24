@@ -23,7 +23,8 @@ import { DetalleComponent } from './clientes/detalle/detalle.component';
 import { LoginComponent } from './usuarios/login.component';
 import { AuthGuard } from './usuarios/guards/auth.guard';
 import { RoleGuard } from './usuarios/guards/role.guard';
-import { TokeInterceptor } from './usuarios/interceptors/token.interceptor';
+import { TokenInterceptor } from './usuarios/interceptors/token.interceptor';
+import { AuthInterceptor } from './usuarios/interceptors/auth.interceptor';
 registerLocaleData(localeES, 'es');
 
 const routes: Routes = [
@@ -59,7 +60,8 @@ const routes: Routes = [
   ],
   providers: [
     ClienteService,
-    { provide: HTTP_INTERCEPTORS, useClass: TokeInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

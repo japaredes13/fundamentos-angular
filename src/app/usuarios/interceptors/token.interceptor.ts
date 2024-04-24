@@ -8,7 +8,7 @@ import { AuthService } from '../auth.service';
 
 /** Pass untouched request through to the next request handler. */
 @Injectable()
-export class TokeInterceptor implements HttpInterceptor {
+export class TokenInterceptor implements HttpInterceptor {
 
   constructor(private authService : AuthService){
 
