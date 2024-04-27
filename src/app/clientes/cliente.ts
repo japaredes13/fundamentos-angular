@@ -1,4 +1,5 @@
-import {Region} from "./region";
+import { Region } from "./region";
+import { Factura } from "../facturas/models/factura";
 export class Cliente {
     id: number;
     name: string;
@@ -7,4 +8,5 @@ export class Cliente {
     email: string;
     photo: string;
     region: Region;
+    facturas: Array<Factura> = [];
 }
